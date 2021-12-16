@@ -63,7 +63,7 @@ export default function Home() {
 
   return (
     <><Head>
-    <title>Orcamento | Só Bora</title>
+    <title>Orçamento | Só Bora</title>
   </Head>
   
   <div className={styles.container}>
@@ -89,7 +89,7 @@ export default function Home() {
       >
         <Input />
       </Form.Item>
-      <Form.Item label='Periodo que deseja viajar' required rules={[{ required: true, message: 'Informe as datas' }]} name='datas'>
+      <Form.Item label='Período que deseja viajar' required rules={[{ required: true, message: 'Informe as datas' }]} name='datas'>
       <DatePicker.RangePicker style={{ width: '70%' }}  disabledDate={disabledDate} format={dateFormat} />
       </Form.Item>
 
@@ -102,12 +102,12 @@ export default function Home() {
         <Input />
       </Form.Item>
     <Form.Item
-        label="Observacoes extras"
+        label="observações extras"
         name='observacoes'
       >
         <Input />
       </Form.Item>
-      <Form.Item label="Gostaria de receber orcamento de viagens semelhantes ?" valuePropName="checked" name="aceitaSemelhante">
+      <Form.Item label="Gostaria de receber orçamentos de viagens semelhantes ?" valuePropName="checked" name="aceitaSemelhante">
         <Switch />
       </Form.Item>
 

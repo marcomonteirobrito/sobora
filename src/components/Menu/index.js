@@ -15,7 +15,7 @@ export const MenuResponsive = () => {
         theme='dark'
       >
         <Menu.Item key="budget" icon={<PoundOutlined />}>
-          Orcamento
+        Orçamento
         </Menu.Item>
         <SubMenu key="contact" icon={<MailOutlined />} title="Contato">
           <Menu.Item key="contact1"><Link href="https://wa.me/5538999299640"><a target="_blank">Whatsapp</a></Link></Menu.Item>
