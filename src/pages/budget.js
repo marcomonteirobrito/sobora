@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { format, parseISO } from 'date-fns'
 import { Form, Input, Button, DatePicker,  Switch, message } from 'antd';
 import axios from 'axios'
 
@@ -10,13 +11,22 @@ export default function Budget() {
   const [form] = Form.useForm();
 
   const sendMail = async (form) => {  
-    const [ida, volta] = form.datas;
+    const dateGoing = form.datas[0]
+    const dateReturn = form.datas[1]
     
-    const data1 = new Date(ida)
-    const data1formatada = data1.toLocaleDateString('pt-BR', { timeZone: 'UTC'})
+    const parsedDateGoing = parseISO(dateGoing)
+    const parsedDateReturn = parseISO(dateReturn)
 
-    const data2 = new Date(volta)
-    const data2formatada = data2.toLocaleDateString('pt-BR', { timeZone: 'UTC'})
+    const formattedDateGoing = format(
+      parsedDateGoing,
+      "'Ida:' dd 'de' MMMM 'de' YYYY"
+    )
+
+    const formattedDateReturn = format(
+      parsedDateReturn,
+      "'Ida:' dd 'de' MMMM 'de' YYYY"
+    )
+    
 
     const mail = {
     service_id: 'client_contact',
@@ -26,7 +36,8 @@ export default function Budget() {
       'nome': form.nome,
       'origem': form.origem,
       'destino': form.destino,
-      'datas': `Ida: ${data1formatada}, volta: ${data2formatada}`,
+      'ida': formattedDateGoing,
+      'volta': formattedDateReturn,
       'email': form.email,
       'observacoes': form.observacoes,
       'aceitaSemelhante': form.aceitaSemelhante ? 'sim' : 'nao'
@@ -41,9 +52,9 @@ export default function Budget() {
         'content-type': 'application/json'
     }
   }).then(res => {
-  message.success('Submit success!');
+  message.success('Enviado com sucesso');
   }).catch(err => {
-  message.error('Submit failed!');
+  message.error('Erro no envio, tente novamente ou entre em contato');
   })
 
   }
