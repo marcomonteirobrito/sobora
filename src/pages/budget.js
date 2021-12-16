@@ -10,6 +10,14 @@ export default function Budget() {
   const [form] = Form.useForm();
 
   const sendMail = async (form) => {  
+    const [ida, volta] = form.datas;
+    
+    const data1 = new Date(ida)
+    const data1formatada = data1.toLocaleDateString('pt-BR', { timeZone: 'UTC'})
+
+    const data2 = new Date(volta)
+    const data2formatada = data2.toLocaleDateString('pt-BR', { timeZone: 'UTC'})
+
     const mail = {
     service_id: 'client_contact',
     template_id: 'CONTACT_FORM',
@@ -18,7 +26,7 @@ export default function Budget() {
       'nome': form.nome,
       'origem': form.origem,
       'destino': form.destino,
-      'datas': JSON.stringify(form.datas),
+      'datas': `Ida: ${data1formatada}, volta: ${data2formatada}`,
       'email': form.email,
       'observacoes': form.observacoes,
       'aceitaSemelhante': form.aceitaSemelhante ? 'sim' : 'nao'
