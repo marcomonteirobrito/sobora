@@ -1,6 +1,7 @@
 import Head from "next/head";
 import axios from 'axios'
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { Spin } from 'antd';
 import { Form, Input, Button, DatePicker,  Switch, message } from 'antd';
 
 import { IsMobileContext } from '../context/IsMobileContext';
@@ -10,13 +11,22 @@ import moment from "moment";
 export default function Home() {
   const { isMobile } = useContext(IsMobileContext)
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false)
+
+  function disabledDate(current) {
+    return current && current < moment().endOf('day');
+  }
+
+  const dateFormat = 'DD/MM/YYYY';
 
   const sendMail = async (form) => {  
+    setLoading(true)
     const dateGoing = form.datas[0]._d
     const dateReturn = form.datas[1]._d
 
-    const parsedDateGoing = moment(dateGoing).format('DD MMMM YYYY')
-    const parsedDateReturn = moment(dateReturn).format('DD MMMM YYYY')
+    const parsedDateGoing = moment(dateGoing).format('DD/MMMM/YYYY')
+    const parsedDateReturn = moment(dateReturn).format('DD/MMMM/YYYY')
+
   
     const mail = {
     service_id: 'client_contact',
@@ -43,8 +53,10 @@ export default function Home() {
     }
   }).then(res => {
   message.success('Enviado com sucesso');
+  setLoading(false)
   }).catch(err => {
   message.error('Erro no envio, tente novamente ou entre em contato');
+  setLoading(false)
   })
 
   }
@@ -62,7 +74,7 @@ export default function Home() {
       onFinish={sendMail}
       style={isMobile ? {width: '80%'} : {width: '40%'}}
     >
-      <Form.Item label="Seu nome completo" required name='nome'>
+      <Form.Item label="Seu nome completo" required rules={[{ required: true, message: 'Informe seu nome' }]} name='nome'>
         <Input />
       </Form.Item>
       <Form.Item
@@ -71,25 +83,26 @@ export default function Home() {
       ><Input /></Form.Item>
       <Form.Item
         label="Destino desejado"
-        required
+        rules={[{ required: true, message: 'Informe o destino' }]}
         name='destino'
+        required
       >
         <Input />
       </Form.Item>
-      <Form.Item label='Periodo que deseja viajar' required name='datas'>
-      <DatePicker.RangePicker style={{ width: '70%' }}  />
+      <Form.Item label='Periodo que deseja viajar' required rules={[{ required: true, message: 'Informe as datas' }]} name='datas'>
+      <DatePicker.RangePicker style={{ width: '70%' }}  disabledDate={disabledDate} format={dateFormat} />
       </Form.Item>
 
     <Form.Item
         label="Seu melhor email"
         required
         name='email'
+        rules={[{ required: true, message: 'Informe seu email' }]}
       >
         <Input />
       </Form.Item>
     <Form.Item
         label="Observacoes extras"
-        required
         name='observacoes'
       >
         <Input />
@@ -97,7 +110,11 @@ export default function Home() {
       <Form.Item label="Gostaria de receber orcamento de viagens semelhantes ?" valuePropName="checked" name="aceitaSemelhante">
         <Switch />
       </Form.Item>
-        <Button type="primary" size='large' style={{width: "100%"}} htmlType='submit'>Enviar</Button>
+
+      <div className={styles.button}>
+        {loading ? <Spin /> : <Button type="primary" size='large' style={{width: "100%"}} htmlType='submit'>Enviar</Button>}
+      
+      </div>
     </Form>
     </div>
   </>
