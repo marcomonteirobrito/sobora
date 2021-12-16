@@ -1,32 +1,22 @@
 import Head from "next/head";
 import axios from 'axios'
 import React, { useContext } from 'react';
-import { format, parseISO } from 'date-fns'
 import { Form, Input, Button, DatePicker,  Switch, message } from 'antd';
 
 import { IsMobileContext } from '../context/IsMobileContext';
 import styles from '../styles/Pages/Budget.module.scss'
+import moment from "moment";
 
 export default function Home() {
   const { isMobile } = useContext(IsMobileContext)
   const [form] = Form.useForm();
 
   const sendMail = async (form) => {  
-    const dateGoing = form.datas[0]
-    const dateReturn = form.datas[1]
-    
-    const parsedDateGoing = parseISO(dateGoing)
-    const parsedDateReturn = parseISO(dateReturn)
+    const dateGoing = form.datas[0]._d
+    const dateReturn = form.datas[1]._d
 
-    const formattedDateGoing = format(
-      parsedDateGoing,
-      "'Ida:' dd 'de' MMMM 'de' YYYY"
-    )
-
-    const formattedDateReturn = format(
-      parsedDateReturn,
-      "'Ida:' dd 'de' MMMM 'de' YYYY"
-    )
+    const parsedDateGoing = moment(dateGoing).format('DD MMMM YYYY')
+    const parsedDateReturn = moment(dateReturn).format('DD MMMM YYYY')
   
     const mail = {
     service_id: 'client_contact',
@@ -36,8 +26,8 @@ export default function Home() {
       'nome': form.nome,
       'origem': form.origem,
       'destino': form.destino,
-      'ida': formattedDateGoing,
-      'volta': formattedDateReturn,
+      'ida': parsedDateGoing,
+      'volta': parsedDateReturn,
       'email': form.email,
       'observacoes': form.observacoes,
       'aceitaSemelhante': form.aceitaSemelhante ? 'sim' : 'nao'
@@ -87,7 +77,7 @@ export default function Home() {
         <Input />
       </Form.Item>
       <Form.Item label='Periodo que deseja viajar' required name='datas'>
-      <DatePicker.RangePicker style={{ width: '70%' }} />
+      <DatePicker.RangePicker style={{ width: '70%' }}  />
       </Form.Item>
 
     <Form.Item

@@ -1,6 +1,5 @@
 import { Menu } from "antd";
 import {
-  InfoCircleOutlined,
   PoundOutlined,
   MailOutlined,
 } from "@ant-design/icons";
