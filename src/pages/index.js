@@ -83,11 +83,11 @@ export default function Home() {
           >
             <Input />
           </Form.Item>
-          <Form.Item label="Origem de partida" name="origem">
+          <Form.Item label="Origem" name="origem">
             <Input />
           </Form.Item>
           <Form.Item
-            label="Destino desejado"
+            label="Destino"
             rules={[{ required: true, message: "Informe o destino" }]}
             name="destino"
             required
@@ -95,7 +95,7 @@ export default function Home() {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Período que deseja viajar"
+            label="Período"
             required
             rules={[{ required: true, message: "Informe as datas" }]}
             name="datas"
@@ -115,7 +115,7 @@ export default function Home() {
           >
             <Input />
           </Form.Item>
-          <Form.Item label="observações extras" name="observacoes">
+          <Form.Item label="Observações" name="observacoes">
             <Input />
           </Form.Item>
           <Form.Item
