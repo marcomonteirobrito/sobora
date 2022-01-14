@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
     <IsMobileProvider>
       <MenuResponsive />
       <Component {...pageProps} />
-      <Footer />
+      {/* <Footer /> */}
     </IsMobileProvider>
   );
 }
