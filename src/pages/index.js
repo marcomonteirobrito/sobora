@@ -2,7 +2,7 @@ import Head from "next/head";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Spin } from "antd";
-import { Form, Input, Button, DatePicker, Switch, message } from "antd";
+import { Form, Input, Button, DatePicker, Switch, message, Radio } from "antd";
 
 import { IsMobileContext } from "../context/IsMobileContext";
 import styles from "../styles/Pages/Budget.module.scss";
@@ -32,6 +32,7 @@ export default function Home() {
       template_id: "CONTACT_FORM",
       user_id: "user_l59sCh4Xn57hN4RUhJoJT",
       template_params: {
+        tipo: form.tipo,
         nome: form.nome,
         origem: form.origem,
         destino: form.destino,
@@ -75,6 +76,14 @@ export default function Home() {
           onFinish={sendMail}
           style={isMobile ? { width: "80%" } : { width: "40%" }}
         >
+          <Form.Item name="tipo" required>
+            <Radio.Group defaultValue={"voo"}>
+              <Radio value="voo">Voo</Radio>
+              <Radio value="hotel">Hotel</Radio>
+              <Radio value="completo">Voo + Hotel</Radio>
+            </Radio.Group>
+          </Form.Item>
+
           <Form.Item
             label="Seu nome completo"
             required
