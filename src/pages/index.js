@@ -35,9 +35,6 @@ export default function Home() {
 
   const dateFormat = "DD/MM/YYYY";
 
-  const initialQuantity = 1;
-  const initialType = "voo";
-
   const sendMail = async (form) => {
     setLoading(true);
     const dateGoing = form.datas[0]._d;
