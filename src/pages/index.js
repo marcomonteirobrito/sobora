@@ -1,7 +1,6 @@
 import Head from "next/head";
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { InputNumber } from "antd";
 import { ConfigProvider } from "antd";
 import { Spin } from "antd";
 import {
@@ -14,7 +13,12 @@ import {
   Radio,
   Space,
 } from "antd";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  MinusCircleFilled,
+  PlusCircleFilled,
+} from "@ant-design/icons";
 import moment from "moment";
 import "moment/locale/pt-br";
 import locale from "antd/lib/locale/pt_BR";
@@ -26,6 +30,19 @@ export default function Home() {
   const { isMobile } = useContext(IsMobileContext);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [peopleQuantity, setPeopleQuantity] = useState(1);
+
+  const reduceQuantity = () => {
+    if (peopleQuantity > 1) {
+      setPeopleQuantity(peopleQuantity - 1);
+    }
+  };
+
+  const addQuantity = () => {
+    if (peopleQuantity < 9) {
+      setPeopleQuantity(peopleQuantity + 1);
+    }
+  };
 
   const { TextArea } = Input;
 
@@ -56,7 +73,7 @@ export default function Home() {
         paradas: form.paradas,
         ida: parsedDateGoing,
         volta: parsedDateReturn,
-        quantidade: form.quantidade,
+        quantidade: peopleQuantity,
         observacoes: form.observacoes,
         aceitaSemelhante: form.aceitaSemelhante ? "sim" : "nao",
       },
@@ -186,12 +203,12 @@ export default function Home() {
             </Form.Item>
           </ConfigProvider>
 
-          <Form.Item
-            label="Quantidade de pessoas"
-            name="quantidade"
-            initialValue={1}
-          >
-            <Input defaultValue={1} style={{ width: "15%" }} />
+          <Form.Item label="Quantidade de pessoas">
+            <div className={styles.quantityContainer}>
+              <MinusCircleFilled onClick={() => reduceQuantity()} />
+              <div className={styles.quantity}>{peopleQuantity}</div>
+              <PlusCircleFilled onClick={() => addQuantity()} />
+            </div>
           </Form.Item>
 
           <Form.Item label="Observações" name="observacoes">
