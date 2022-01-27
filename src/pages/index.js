@@ -191,7 +191,7 @@ export default function Home() {
             name="quantidade"
             initialValue={1}
           >
-            <InputNumber min={1} />
+            <Input defaultValue={1} style={{ width: "15%" }} />
           </Form.Item>
 
           <Form.Item label="Observações" name="observacoes">
