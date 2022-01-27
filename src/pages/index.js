@@ -179,7 +179,7 @@ export default function Home() {
             >
               <DatePicker.RangePicker
                 locale={locale}
-                style={{ width: "70%" }}
+                style={{ width: "100%" }}
                 disabledDate={disabledDate}
                 format={dateFormat}
               />
